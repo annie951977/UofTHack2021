@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import TRASH from 'data.js';
-import { shuffle, getTimeLeft, move, GAME_STATE } from 'utils.js';
+import { GARBAGE , TRASH } from './data';
+import { shuffle, getTimeLeft, move, GAME_STATE } from './utils';
 
-import Modal from './components/Modal';
-import Header from './components/Header';
-import Dropzone from './components/Dropzone';
+import Modal from './Modal';
+import Header from './Header';
+import Dropzone from './Dropzone';
 
 const GAME_DURATION = 1000 * 30; // 30 seconds
 
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of heroes
   bench: shuffle(TRASH),
-  [COMICS.DC]: [],
-  [COMICS.MARVEL]: [],
+  [GARBAGE.GARBAGE]: [],
+  [GARBAGE.RECYCLABLE]: [],
+  [GARBAGE.COMPOST]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
 };
@@ -95,21 +96,23 @@ class App extends Component {
                 <div className="container">
                   <div className="columns">
                     <Dropzone
-                      id={COMICS.MARVEL}
-                      heroes={this.state[COMICS.MARVEL]}
+                      id={GARBAGE.GARBAGE}
+                      heroes={this.state[GARBAGE.GARBAGE]}
                       isDropDisabled={isDropDisabled}
                     />
-                    <Dropzone id="bench" heroes={bench} isDropDisabled={isDropDisabled} />
+                    <Dropzone 
+                      id="bench" 
+                      heroes={bench} 
+                      isDropDisabled={isDropDisabled} />
                     <Dropzone
-                      id={COMICS.DC}
-                      heroes={this.state[COMICS.DC]}
+                      id={GARBAGE.GARBAGE}
+                      heroes={this.state[GARBAGE.GARBAGE]}
                       isDropDisabled={isDropDisabled}
                     />
                   </div>
                 </div>
               </DragDropContext>
             )}
-            <Footer />
           </>
         );
       }

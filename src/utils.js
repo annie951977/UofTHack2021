@@ -1,4 +1,3 @@
-import TRASH from 'data.js';
 
 // the Knuth shuffle algorithm
 export function shuffle(array) {

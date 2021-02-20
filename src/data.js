@@ -1,3 +1,9 @@
+export const GARBAGE = {
+    GARBAGE: 'garbage',
+    RECYCLABLE: 'recyclable',
+    COMPOST: 'compost',
+};
+
 export const TRASH = [
     {
         name: 'used diapers',
