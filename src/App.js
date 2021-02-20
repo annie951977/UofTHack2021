@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import { GARBAGE , TRASH } from './data';
-import { shuffle, getTimeLeft, move, GAME_STATE } from './utils';
+import { shuffle, getTimeLeft, getTotalScore, move, GAME_STATE } from './utils';
 
 import Modal from './Modal';
 import Header from './Header';
 import Dropzone from './Dropzone';
+import Scores from './Scores';
 import { io } from 'socket.io-client';
 
 const GAME_DURATION = 1000 * 30; // 30 seconds
@@ -19,6 +20,7 @@ const initialState = {
   [GARBAGE.COMPOST]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
+  scores: {}
 };
 
 initialState["userName"] = "";
@@ -38,8 +40,7 @@ class App extends Component {
     if (this.state.userName === "") {
       return;
     }
-
-    socket.emit('username', this.state.userName);
+    socket.emit('sendUsername', this.state.userName);
 
     this.currentDeadline = Date.now() + GAME_DURATION;
     this.setState(
@@ -78,8 +79,6 @@ class App extends Component {
 
   resetGame = () => {
     this.setState(initialState);
-    console.log(this.state.userName)
-
   };
 
   onDragEnd = ({ source, destination }) => {
@@ -89,6 +88,9 @@ class App extends Component {
 
     this.setState(state => {
       return move(state, source, destination);
+    }, () => {
+      const { gameState, timeLeft, bench, ...groups } = this.state;
+      socket.emit('updateMyScore', getTotalScore(groups, timeLeft))
     });
   };
 
@@ -110,6 +112,7 @@ class App extends Component {
                 onChange = {this.onChange}
               />
             )}
+            <Scores scores={this.state.scores}></Scores>
             {(this.state.gameState === GAME_STATE.PLAYING ||
               this.state.gameState === GAME_STATE.DONE) && (
               <DragDropContext onDragEnd={this.onDragEnd}>
@@ -147,6 +150,12 @@ class App extends Component {
     if (this.timer) {
       clearInterval(this.timer);
     }
+  }
+
+  componentDidMount() {
+    socket.on('scores updated', (newScores) => {
+      this.setState({scores: newScores}, () => {console.log(this.state.scores)});
+    });
   }
 }
 

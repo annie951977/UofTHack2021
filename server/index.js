@@ -28,7 +28,11 @@ io.sockets.on('connection', function(socket) {
     console.log("client disconnected");
   });
 
-  socket.on('username', (userName) => {
-    console.log(userName);
+  socket.on('sendUsername', (userName) => {
+    console.log('New user joined: ' + userName);
+    socket.emit('scores updated', {newobj: "newString"});
+  });
+  socket.on('updateMyScore', newTotal => {
+    console.log('Updated score: ' + newTotal);
   })
 });
