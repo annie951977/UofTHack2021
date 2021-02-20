@@ -27,6 +27,8 @@ function updateScores(users, socketId, firstPlace, avg, playerCount) {
     userName: users[socketId].userName + " (you)",
     score: users[socketId].score
   });
+
+  // if there is only one player, send [you]
   if (playerCount == 1)
     return scores;
 
@@ -50,14 +52,30 @@ function updateScores(users, socketId, firstPlace, avg, playerCount) {
     score: users[firstPlace].score
   });
 
+  // if there are only two players, send [you, firstPlace]
   if (playerCount == 2) {
     return scores;
   }
 
-  scores.push({
-    userName: "Average",
-    score: avg
-  });
+  
+  // if there are only three players, send [you, firstPlace, otherPlayer]
+  if (playerCount == 3) {
+    for (const [iterSocketId, {userName, score}] of Object.entries(users)) {
+      if (iterSocketId != socketId && iterSocketId != firstPlace)
+        scores.push({
+          userName: userName,
+          score: score
+        });
+    }
+  } 
+  
+  // if there are more than three players, send [you, firstPlace, avg]
+  else {
+    scores.push({
+      userName: "Average",
+      score: avg
+    });
+  }
 
   return scores;
 }
