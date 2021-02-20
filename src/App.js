@@ -107,12 +107,12 @@ class App extends Component {
                     />
                     <Dropzone
                       id={GARBAGE.RECYCLABLE}
-                      trash={this.state[GARBAGE.GARBAGE]}
+                      trash={this.state[GARBAGE.RECYCLABLE]}
                       isDropDisabled={isDropDisabled}
                     />
                     <Dropzone
                       id={GARBAGE.COMPOST}
-                      trash={this.state[GARBAGE.GARBAGE]}
+                      trash={this.state[GARBAGE.COMPOST]}
                       isDropDisabled={isDropDisabled}
                     />
                   </div>
