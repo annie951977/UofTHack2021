@@ -7,6 +7,7 @@ import { shuffle, getTimeLeft, move, GAME_STATE } from './utils';
 import Modal from './Modal';
 import Header from './Header';
 import Dropzone from './Dropzone';
+import { io } from 'socket.io-client';
 
 const GAME_DURATION = 1000 * 30; // 30 seconds
 
@@ -22,6 +23,8 @@ const initialState = {
 
 initialState["userName"] = "";
 
+const socket = io();
+
 class App extends Component {
   state = initialState;
 
@@ -34,18 +37,18 @@ class App extends Component {
   startGame = () => {
     if (this.state.userName === "") {
       return;
-    } else {
-      this.currentDeadline = Date.now() + GAME_DURATION;
-
-      this.setState(
-        {
-          gameState: GAME_STATE.PLAYING,
-          timeLeft: getTimeLeft(this.currentDeadline),
-        },
-        this.gameLoop
-      );
     }
 
+    socket.emit('username', this.state.userName);
+
+    this.currentDeadline = Date.now() + GAME_DURATION;
+    this.setState(
+      {
+        gameState: GAME_STATE.PLAYING,
+        timeLeft: getTimeLeft(this.currentDeadline),
+      },
+      this.gameLoop
+    );
   };
 
   gameLoop = () => {
