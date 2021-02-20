@@ -153,7 +153,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    socket.on('scores updated', (newScores) => {
+    socket.on('scoresUpdated', (newScores) => {
       this.setState({scores: newScores}, () => {console.log(this.state.scores)});
     });
   }
