@@ -22,14 +22,6 @@ export const TRASH = [
         type: 'garbage'
     },
     {
-        name: 'wrapper',
-        type: 'garbage'
-    },
-    {
-        name: 'chip bag',
-        type: 'garbage'
-    },
-    {
         name: 'tissue',
         type: 'garbage'
     },
@@ -50,10 +42,6 @@ export const TRASH = [
         type: 'recyclable'
     },
     {
-        name: 'labelled can',
-        type: 'recyclable'
-    },
-    {
         name: 'paper towel',
         type: 'recyclable'
     },
@@ -71,10 +59,6 @@ export const TRASH = [
     },
     {
         name: 'egg shell',
-        type: 'compost'
-    },
-    {
-        name: 'vegetable scraps',
         type: 'compost'
     },
     {

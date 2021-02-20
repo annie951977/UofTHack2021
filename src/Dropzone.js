@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Dropzone = ({ isDropDisabled, heroes, id }) => (
-  <div className="column col-4">
+  <div className="column col-3">
     <div className="divider" data-content={id.toUpperCase()} />
     <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
       {provided => {

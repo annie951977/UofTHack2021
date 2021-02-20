@@ -1,3 +1,4 @@
+import { GARBAGE, TRASH } from './data';
 
 // the Knuth shuffle algorithm
 export function shuffle(array) {
@@ -20,26 +21,50 @@ export function shuffle(array) {
   return array;
 }
 
-// method to handle to the cards movement
+// method to handle points calculation based on sort order as well as grouping
+function calculateScore(groupedTrash, garbageType) {
+  const correctOrder = TRASH.filter(trash => trash.garbageType === garbageType).sort((a, b) =>
+    a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+  );
+
+  return groupedTrash.reduce((score, { name }, index) => {
+    const maxPoint = TRASH.length;
+    const trashIndex = correctOrder.findIndex(trash => trash.name === name);
+    const penalty = trashIndex >= 0 ? Math.abs(index - trashIndex) : maxPoint;
+    console.log({ name, points: maxPoint - penalty });
+    return score + (maxPoint - penalty);
+  }, 0);
+}
+
+export function getTotalScore(groups, timeLeft) {
+  const gameScore = Object.values(GARBAGE).reduce(
+    (sum, trashName) => sum + calculateScore(groups[trashName], trashName),
+    0
+  );
+  const timeBonus = getSeconds(timeLeft);
+  return gameScore ? gameScore + timeBonus : 0;
+}
+
+// method to handle to the heroe cards movement
 export const move = (state, source, destination) => {
-    const srcListClone = [...state[source.droppableId]];
-    const destListClone =
-      source.droppableId === destination.droppableId
-        ? srcListClone
-        : [...state[destination.droppableId]];
-  
-    const [movedElement] = srcListClone.splice(source.index, 1);
-    destListClone.splice(destination.index, 0, movedElement);
-  
-    return {
-      [source.droppableId]: srcListClone,
-      ...(source.droppableId === destination.droppableId
-        ? {}
-        : {
-            [destination.droppableId]: destListClone,
-          }),
-    };
+  const srcListClone = [...state[source.droppableId]];
+  const destListClone =
+    source.droppableId === destination.droppableId
+      ? srcListClone
+      : [...state[destination.droppableId]];
+
+  const [movedElement] = srcListClone.splice(source.index, 1);
+  destListClone.splice(destination.index, 0, movedElement);
+
+  return {
+    [source.droppableId]: srcListClone,
+    ...(source.droppableId === destination.droppableId
+      ? {}
+      : {
+          [destination.droppableId]: destListClone,
+        }),
   };
+};
 
 // method to get time left
 export const getTimeLeft = deadline => deadline - Date.now();

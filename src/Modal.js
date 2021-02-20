@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GAME_STATE, getTotalScore } from '../custom/utils';
+import { GAME_STATE, getTotalScore } from './utils';
 
 const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
   <div className="modal modal-sm active">
