@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "react": "^16.13.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.0",
+    "spectre.css": "^0.5.9"
   },
   "scripts": {
     "start": "react-scripts start",
