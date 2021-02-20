@@ -1,15 +1,15 @@
 import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Dropzone = ({ isDropDisabled, heroes, id }) => (
+const Dropzone = ({ isDropDisabled, trash, id }) => (
   <div className="column col-3">
     <div className="divider" data-content={id.toUpperCase()} />
     <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
       {provided => {
         return (
-          <div className="menu hero-list" {...provided.droppableProps} ref={provided.innerRef}>
-            {heroes.map(({ name }, index) => (
-              <Hero key={name} name={name} index={index} />
+          <div className="menu trash-list" {...provided.droppableProps} ref={provided.innerRef}>
+            {trash.map(({ name }, index) => (
+              <Trash key={name} name={name} index={index} />
             ))}
             {provided.placeholder}
           </div>
@@ -19,7 +19,7 @@ const Dropzone = ({ isDropDisabled, heroes, id }) => (
   </div>
 );
 
-const Hero = ({ name, index }) => (
+const Trash = ({ name, index }) => (
   <Draggable key={name} draggableId={name} index={index}>
     {provided => {
       return (

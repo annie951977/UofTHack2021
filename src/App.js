@@ -94,26 +94,25 @@ class App extends Component {
               this.state.gameState === GAME_STATE.DONE) && (
               <DragDropContext onDragEnd={this.onDragEnd}>
                 <div className="container">
-                  <div className="rows"></div>
                   <div className="columns">
                     <Dropzone 
                       id="bench" 
-                      heroes={bench} 
+                      trash={bench} 
                       isDropDisabled={isDropDisabled} 
                     />
                     <Dropzone
                       id={GARBAGE.GARBAGE}
-                      heroes={this.state[GARBAGE.GARBAGE]}
+                      trash={this.state[GARBAGE.GARBAGE]}
                       isDropDisabled={isDropDisabled}
                     />
                     <Dropzone
-                      id={GARBAGE.GARBAGE}
-                      heroes={this.state[GARBAGE.GARBAGE]}
+                      id={GARBAGE.RECYCLABLE}
+                      trash={this.state[GARBAGE.GARBAGE]}
                       isDropDisabled={isDropDisabled}
                     />
                     <Dropzone
-                      id={GARBAGE.GARBAGE}
-                      heroes={this.state[GARBAGE.GARBAGE]}
+                      id={GARBAGE.COMPOST}
+                      trash={this.state[GARBAGE.GARBAGE]}
                       isDropDisabled={isDropDisabled}
                     />
                   </div>
