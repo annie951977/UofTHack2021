@@ -7,13 +7,13 @@ const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
     <div className="modal-overlay" />
     <div className="modal-container">
       <div className="modal-header">
-        <div className="modal-title h4">Line up the Heroes</div>
+        <div className="modal-title h4">Sort the Trash!</div>
       </div>
       <div className="modal-body">
         <div className="content h6">
           {' '}
           {gameState === GAME_STATE.READY
-            ? `Drag and Drop the heroes in the correct comics list, sort them alphabetically and quickly for better score...`
+            ? `Sort the trash to garbage, recyclables, and compost! Sort them alphabetically and quickly for better score...`
             : `You scored - ${getTotalScore(groups, timeLeft)}`}
         </div>
       </div>
