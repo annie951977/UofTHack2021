@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { GAME_STATE, getTotalScore } from './utils';
-
-const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
+const Modal = ({ gameState, groups, startGame, timeLeft, resetGame, userName, onChange }) => (
   <div className="modal modal-sm active">
     <div className="modal-overlay" />
     <div className="modal-container">
@@ -16,11 +15,18 @@ const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
             ? `Sort the trash to garbage, recyclables, and compost! Sort them alphabetically and quickly for better score...`
             : `You scored - ${getTotalScore(groups, timeLeft)}`}
         </div>
+        <form id="username-form" onSubmit={gameState === GAME_STATE.READY ? startGame : resetGame}>
+        {gameState === GAME_STATE.READY && (
+            <input className="form-input" style={{marginTop: "25px"}} type="text" value={userName==="" ? null : userName} placeholder="Username" onChange={onChange}></input>
+        )}
+        </form>
+        
       </div>
       <div className="modal-footer">
+      
         <button
+          form="username-form"
           className="btn btn-primary"
-          onClick={gameState === GAME_STATE.READY ? startGame : resetGame}
         >
           {gameState === GAME_STATE.READY ? 'Start new game' : 'Restart game'}
         </button>

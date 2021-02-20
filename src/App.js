@@ -20,19 +20,32 @@ const initialState = {
   timeLeft: 0,
 };
 
+initialState["userName"] = "";
+
 class App extends Component {
   state = initialState;
-  
-  startGame = () => {
-    this.currentDeadline = Date.now() + GAME_DURATION;
 
+  onChange = (event) => {
     this.setState(
-      {
-        gameState: GAME_STATE.PLAYING,
-        timeLeft: getTimeLeft(this.currentDeadline),
-      },
-      this.gameLoop
+      {userName: event.target.value}
     );
+  }
+
+  startGame = () => {
+    if (this.state.userName === "") {
+      return;
+    } else {
+      this.currentDeadline = Date.now() + GAME_DURATION;
+
+      this.setState(
+        {
+          gameState: GAME_STATE.PLAYING,
+          timeLeft: getTimeLeft(this.currentDeadline),
+        },
+        this.gameLoop
+      );
+    }
+
   };
 
   gameLoop = () => {
@@ -62,6 +75,8 @@ class App extends Component {
 
   resetGame = () => {
     this.setState(initialState);
+    console.log(this.state.userName)
+
   };
 
   onDragEnd = ({ source, destination }) => {
@@ -88,6 +103,8 @@ class App extends Component {
                 timeLeft={timeLeft}
                 gameState={gameState}
                 groups={groups}
+                userName = {this.userName}
+                onChange = {this.onChange}
               />
             )}
             {(this.state.gameState === GAME_STATE.PLAYING ||
