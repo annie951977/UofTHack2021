@@ -23,7 +23,7 @@ export function shuffle(array) {
 
 // method to handle points calculation based on sort order as well as grouping
 function calculateScore(groupedTrash, garbageType) {
-  const correctOrder = TRASH.filter(trash => trash.garbageType === garbageType).sort((a, b) =>
+  const correctOrder = TRASH.filter(trash => trash.type === garbageType).sort((a, b) =>
     a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
   );
 
