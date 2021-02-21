@@ -30,7 +30,7 @@ const Trash = ({ name, index }) => (
           {...provided.dragHandleProps}
         >
           <figure style={{ backgroundColor: 'transparent' }} className="avatar tile-icon">
-            <img src={`./hero_icons/${name.toLowerCase().replace(' ', '-')}.svg`} alt={name} />
+            <img src={process.env.PUBLIC_URL + `/icons/${name.toLowerCase().replace(' ', '-')}.svg`} alt={name} />
           </figure>
           <div className="tile-content">{name}</div>
         </div>
