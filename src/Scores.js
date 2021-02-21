@@ -16,7 +16,7 @@ const Scores = ({scores}) => {
         
         console.log(String(elem.score*100/maxPossibleScore) + "%");
         return (
-            <div class="progress" style={{height: "50px", position: "relative", marginLeft: "110px"}}>
+            <div class="progress" style={{height: "40px", position: "relative", marginLeft: "110px", borderBottom: "dashed orange 3px", paddingTop: "5px"}}>
                 <div style={{left: String(elem.score*100/maxPossibleScore) + "%", position: "absolute", transform: "translate(-100%, 0)"}}>
                     <div style={{display: "flex", flexDirection: "row"}}>
 

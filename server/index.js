@@ -109,7 +109,10 @@ io.sockets.on('connection', function(socket) {
     if (firstPlace == null) {
       firstPlace = socket.id
     }
-  
+    
+    for (const [iterSocketId, {userName, score}] of Object.entries(users)) {
+      socket.to(iterSocketId).emit('scoresUpdated', {scores: updateScores(users, iterSocketId, firstPlace, avg, playerCount)});
+    }
     socket.emit('scoresUpdated', {scores: updateScores(users, socket.id, firstPlace, avg, playerCount)});
   });
   socket.on('updateMyScore', (newTotal) => {
@@ -117,6 +120,9 @@ io.sockets.on('connection', function(socket) {
     users[socket.id].score = newTotal;
     if (newTotal > users[firstPlace].score) {
       firstPlace = socket.id;
+    }
+    for (const [iterSocketId, {userName, score}] of Object.entries(users)) {
+      socket.to(iterSocketId).emit('scoresUpdated', {scores: updateScores(users, iterSocketId, firstPlace, avg, playerCount)});
     }
     console.log('Updated score: ' + newTotal);
     socket.emit('scoresUpdated', {scores: updateScores(users, socket.id, firstPlace, avg, playerCount)});
