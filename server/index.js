@@ -3,6 +3,23 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 
 const app = express();
+const port = process.env.PORT || 3000
+const port_proxy = process.env.PORT_PROXY || 3001
+
+
+// const { createProxyMiddleware } = require('http-proxy-middleware');
+
+// // proxy middleware options
+// const options = {
+//   target: 'http://localhost:' + String(port_proxy), // target host
+//   changeOrigin: true, // needed for virtual hosted sites
+//   ws: true, // proxy websockets
+// };
+
+// // create the proxy (without context)
+// const exampleProxy = createProxyMiddleware(options);
+
+// app.use(exampleProxy);
 
 app.use(express.static(__dirname + '/node_modules')); 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,8 +31,8 @@ app.get('/api/greeting', (req, res) => {
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-const server = app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
+const server = app.listen(port_proxy, () =>
+  console.log('Express server is running on localhost: ' + port_proxy)
 );
 
 const io = require('socket.io')(server);
