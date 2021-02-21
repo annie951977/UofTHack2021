@@ -10,7 +10,7 @@ import Dropzone from './Dropzone';
 import Scores from './Scores';
 import { io } from 'socket.io-client';
 
-const GAME_DURATION = 1000 * 1000; // 30 seconds
+const GAME_DURATION = 1000 * 120; // 30 seconds
 
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of heroes
@@ -20,7 +20,8 @@ const initialState = {
   [GARBAGE.COMPOST]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
-  scores: []
+  scores: [],
+  isWinner: false
 };
 
 initialState["userName"] = "";
@@ -90,12 +91,17 @@ class App extends Component {
       return move(state, source, destination);
     }, () => {
       const { gameState, timeLeft, bench, ...groups } = this.state;
-      socket.emit('updateMyScore', getTotalScore(groups, timeLeft))
+      const newScore = getTotalScore(groups, timeLeft);
+      socket.emit('updateMyScore', newScore);
+      if (newScore >= 50) {
+        socket.emit('iWon');
+        this.setState({isWinner: true}, this.endGame);
+      }
     });
   };
 
   render() {
-    const { gameState, timeLeft, bench, scores, ...groups } = this.state;
+    const { gameState, timeLeft, bench, scores, isWinner, ...groups } = this.state;
     const isDropDisabled = gameState === GAME_STATE.DONE;
 
     return (
@@ -110,6 +116,7 @@ class App extends Component {
                 groups={groups}
                 userName = {this.userName}
                 onChange = {this.onChange}
+                isWinner = {isWinner}
               />
             )}
             
@@ -165,6 +172,9 @@ class App extends Component {
     socket.on('scoresUpdated', (newScores) => {
       this.setState(newScores, () => {console.log(this.state.scores)});
     });
+    socket.on('someoneWon', () => {
+      this.endGame();
+    })
   }
 }
 

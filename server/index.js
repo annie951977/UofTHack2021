@@ -126,5 +126,9 @@ io.sockets.on('connection', function(socket) {
     }
     console.log('Updated score: ' + newTotal);
     socket.emit('scoresUpdated', {scores: updateScores(users, socket.id, firstPlace, avg, playerCount)});
+  });
+
+  socket.on('iWon', () => {
+    socket.broadcast.emit('someoneWon');
   })
 });

@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { GAME_STATE, getTotalScore } from './utils';
-const Modal = ({ gameState, groups, startGame, timeLeft, resetGame, userName, onChange }) => (
+const Modal = ({ gameState, groups, startGame, timeLeft, resetGame, userName, onChange, isWinner }) => {
+  console.log(isWinner);
+  return (
   <div className="modal modal-sm active">
     <div className="modal-overlay" />
     <div className="modal-container">
@@ -13,7 +15,7 @@ const Modal = ({ gameState, groups, startGame, timeLeft, resetGame, userName, on
           {' '}
           {gameState === GAME_STATE.READY
             ? `Sort the trash to garbage, recyclables, and compost! Sort them alphabetically and quickly for better score...`
-            : `You scored - ${getTotalScore(groups, timeLeft)}`}
+            : isWinner ? `You won - ${getTotalScore(groups, timeLeft)}` : `You scored - ${getTotalScore(groups, timeLeft)}` }
         </div>
         <form id="username-form" onSubmit={gameState === GAME_STATE.READY ? startGame : resetGame}>
         {gameState === GAME_STATE.READY && (
@@ -34,5 +36,6 @@ const Modal = ({ gameState, groups, startGame, timeLeft, resetGame, userName, on
     </div>
   </div>
 );
+        }
 
 export default Modal;
