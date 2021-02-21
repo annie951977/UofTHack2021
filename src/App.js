@@ -20,7 +20,7 @@ const initialState = {
   [GARBAGE.COMPOST]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
-  scores: {}
+  scores: []
 };
 
 initialState["userName"] = "";
@@ -95,7 +95,7 @@ class App extends Component {
   };
 
   render() {
-    const { gameState, timeLeft, bench, ...groups } = this.state;
+    const { gameState, timeLeft, bench, scores, ...groups } = this.state;
     const isDropDisabled = gameState === GAME_STATE.DONE;
 
     return (
@@ -112,7 +112,7 @@ class App extends Component {
                 onChange = {this.onChange}
               />
             )}
-            <Scores scores={this.state.scores}></Scores>
+            <Scores scores={scores}></Scores>
             {(this.state.gameState === GAME_STATE.PLAYING ||
               this.state.gameState === GAME_STATE.DONE) && (
               <DragDropContext onDragEnd={this.onDragEnd}>
@@ -154,7 +154,7 @@ class App extends Component {
 
   componentDidMount() {
     socket.on('scoresUpdated', (newScores) => {
-      this.setState({scores: newScores}, () => {console.log(this.state.scores)});
+      this.setState(newScores, () => {console.log(this.state.scores)});
     });
   }
 }

@@ -110,7 +110,7 @@ io.sockets.on('connection', function(socket) {
       firstPlace = socket.id
     }
   
-    socket.emit('scoresUpdated', updateScores(users, socket.id, firstPlace, avg, playerCount));
+    socket.emit('scoresUpdated', {scores: updateScores(users, socket.id, firstPlace, avg, playerCount)});
   });
   socket.on('updateMyScore', (newTotal) => {
     avg = calcNewAvg(avg, users[socket.id].score, newTotal, playerCount);
@@ -119,6 +119,6 @@ io.sockets.on('connection', function(socket) {
       firstPlace = socket.id;
     }
     console.log('Updated score: ' + newTotal);
-    socket.emit('scoresUpdated', updateScores(users, socket.id, firstPlace, avg, playerCount));
+    socket.emit('scoresUpdated', {scores: updateScores(users, socket.id, firstPlace, avg, playerCount)});
   })
 });
