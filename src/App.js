@@ -10,7 +10,7 @@ import Dropzone from './Dropzone';
 import Scores from './Scores';
 import { io } from 'socket.io-client';
 
-const GAME_DURATION = 1000 * 1000; // 30 seconds
+const GAME_DURATION = 1000 * 30; // 30 seconds
 
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of heroes

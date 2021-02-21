@@ -11,22 +11,25 @@ const Scores = ({scores}) => {
     console.log(scores);
     let count = scores.length;
     return (
-        <div>
+<React.Fragment>
     {(scores.map(elem => {
         
         console.log(String(elem.score*100/maxPossibleScore) + "%");
         return (
-            <div class="progress" style={{width: "100%", height: "50px"}}>
-                {/* <div class="progress-bar" in={maxPossibleScore} style={{height: "30px", width: String(elem.score/maxPossibleScore) + "%"}}> */}
-                    <figure style={{ backgroundColor: 'transparent', left: String(elem.score*100/maxPossibleScore) + "%"}} className="avatar tile-icon">
+            <div class="progress" style={{height: "50px", position: "relative", marginLeft: "110px"}}>
+                <div style={{left: String(elem.score*100/maxPossibleScore) + "%", position: "absolute", transform: "translate(-100%, 0)"}}>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+
+                    <div style={{color: "black", padding: "5px", width: "100px", textAlign: "end"}}>{elem.userName}</div>  
+                    <figure style={{ backgroundColor: 'transparent'}} className="avatar tile-icon">
                         <img src={process.env.PUBLIC_URL + `/icons/banana-peel.svg`} />
                     </figure>
-                {/* </div> */}
-                
+                    </div>
+                </div>
             </div>
         )
     }))}
-    </div>
+</React.Fragment>
     );
     
 }
