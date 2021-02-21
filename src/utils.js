@@ -41,8 +41,7 @@ export function getTotalScore(groups, timeLeft) {
     (sum, trashName) => sum + calculateScore(groups[trashName], trashName),
     0
   );
-  const timeBonus = getSeconds(timeLeft);
-  return gameScore ? gameScore + timeBonus : 0;
+  return gameScore ? gameScore : 0;
 }
 
 // method to handle to the heroe cards movement

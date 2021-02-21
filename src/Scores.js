@@ -1,6 +1,6 @@
 import React from 'react';
 
-const maxPossibleScore = 100;
+const maxPossibleScore = 222;
 
 const Score = (userName, score) => {
     // <svg></svg>
