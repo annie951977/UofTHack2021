@@ -2,12 +2,12 @@ import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Dropzone = ({ isDropDisabled, trash, id }) => (
-  <div className="column col-3">
+  <div className={id==="bench" ? "column col-3" : "column col-4a"} style={{display: "flex", flexDirection: "column"}}>
     <div className="divider" data-content={id.toUpperCase()} />
     <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
       {provided => {
         return (
-          <div className="menu trash-list" {...provided.droppableProps} ref={provided.innerRef}>
+          <div className="menu trash-list" {...provided.droppableProps} ref={provided.innerRef} style={{flexGrow: 1}}>
             {trash.map(({ name }, index) => (
               <Trash key={name} name={name} index={index} />
             ))}

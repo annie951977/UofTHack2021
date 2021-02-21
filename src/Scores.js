@@ -16,9 +16,9 @@ const Scores = ({scores}) => {
         
         console.log(String(elem.score*100/maxPossibleScore) + "%");
         return (
-            <div class="progress" style={{width: "100%", height: "35px"}}>
+            <div class="progress" style={{width: "100%", height: "50px"}}>
                 {/* <div class="progress-bar" in={maxPossibleScore} style={{height: "30px", width: String(elem.score/maxPossibleScore) + "%"}}> */}
-                    <figure style={{ backgroundColor: 'transparent',  position: "absolute", left: String(elem.score*100/maxPossibleScore) + "%"}} className="avatar tile-icon">
+                    <figure style={{ backgroundColor: 'transparent', left: String(elem.score*100/maxPossibleScore) + "%"}} className="avatar tile-icon">
                         <img src={process.env.PUBLIC_URL + `/icons/banana-peel.svg`} />
                     </figure>
                 {/* </div> */}

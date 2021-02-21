@@ -10,7 +10,7 @@ import Dropzone from './Dropzone';
 import Scores from './Scores';
 import { io } from 'socket.io-client';
 
-const GAME_DURATION = 1000 * 30; // 30 seconds
+const GAME_DURATION = 1000 * 1000; // 30 seconds
 
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of heroes
@@ -112,7 +112,7 @@ class App extends Component {
                 onChange = {this.onChange}
               />
             )}
-            <Scores scores={scores}></Scores>
+            
             {(this.state.gameState === GAME_STATE.PLAYING ||
               this.state.gameState === GAME_STATE.DONE) && (
               <DragDropContext onDragEnd={this.onDragEnd}>
@@ -123,21 +123,30 @@ class App extends Component {
                       trash={bench} 
                       isDropDisabled={isDropDisabled} 
                     />
-                    <Dropzone
-                      id={GARBAGE.GARBAGE}
-                      trash={this.state[GARBAGE.GARBAGE]}
-                      isDropDisabled={isDropDisabled}
-                    />
-                    <Dropzone
-                      id={GARBAGE.RECYCLABLE}
-                      trash={this.state[GARBAGE.RECYCLABLE]}
-                      isDropDisabled={isDropDisabled}
-                    />
-                    <Dropzone
-                      id={GARBAGE.COMPOST}
-                      trash={this.state[GARBAGE.COMPOST]}
-                      isDropDisabled={isDropDisabled}
-                    />
+                    <div className="column col-9" style={{display: "flex", flexDirection: "column"}}>
+                      <div className="rows">
+                        <Scores scores={scores}></Scores>
+                      </div>
+                      <div className="columns" style={{flexGrow: 1}}>
+                        <Dropzone
+                          id={GARBAGE.GARBAGE}
+                          trash={this.state[GARBAGE.GARBAGE]}
+                          isDropDisabled={isDropDisabled}
+                        />
+                        <Dropzone
+                          id={GARBAGE.RECYCLABLE}
+                          trash={this.state[GARBAGE.RECYCLABLE]}
+                          isDropDisabled={isDropDisabled}
+                        />
+                        <Dropzone
+                          id={GARBAGE.COMPOST}
+                          trash={this.state[GARBAGE.COMPOST]}
+                          isDropDisabled={isDropDisabled}
+                        />
+                      </div>
+                      
+                    </div>
+
                   </div>
                 </div>
               </DragDropContext>
