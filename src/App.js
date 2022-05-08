@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { GARBAGE , TRASH } from './data';
+import { GARBAGE , TRASH, maxPossibleScore } from './data';
 import { shuffle, getTimeLeft, getTotalScore, move, GAME_STATE } from './utils';
 
 import Modal from './Modal';
@@ -93,7 +93,7 @@ class App extends Component {
       const { gameState, timeLeft, bench, ...groups } = this.state;
       const newScore = getTotalScore(groups, timeLeft);
       socket.emit('updateMyScore', newScore);
-      if (newScore >= 50) {
+      if (newScore >= maxPossibleScore) {
         socket.emit('iWon');
         this.setState({isWinner: true}, this.endGame);
       }

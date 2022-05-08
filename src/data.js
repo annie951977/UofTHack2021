@@ -70,3 +70,5 @@ export const TRASH = [
         type: 'compost'
     },
 ];
+
+export const maxPossibleScore = 230;
